@@ -24,9 +24,12 @@ fn main() {
 			info!("Got polls from airtable");
 
 			for poll in poll_data {
-				if !poll.done {
+				if !poll.used {
 					dinopoll::create_poll(&client, &poll)
 						.expect("Failed to create poll with dinopoll");
+					info!("Posted poll");
+					airtable::set_as_used(&client, &poll).expect("Failed to set poll to used");
+					info!("Set poll to used in airtable")
 				}
 			}
 		}
