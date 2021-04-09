@@ -4,9 +4,18 @@ use anyhow::{bail, Context};
 use reqwest::blocking::Client;
 use reqwest::StatusCode;
 use serde::Deserialize;
-use serde_json::Value;
 
 fn get_token() -> Result<String, anyhow::Error> { Ok(env::var("AIRTABLE_TOKEN")?) }
+
+#[derive(Deserialize)]
+struct AirtableRecord<T> {
+	fields: T,
+}
+
+#[derive(Deserialize)]
+struct AirtableResponse<T> {
+	records: Vec<AirtableRecord<T>>,
+}
 
 #[derive(Deserialize, Debug)]
 struct PollData {
@@ -43,21 +52,16 @@ pub fn get_polls(client: &Client) -> Result<Vec<Poll>, anyhow::Error> {
 	}
 
 	// Parsing response
-	let polls_data: Value =
+	let polls_data: AirtableResponse<PollData> =
 		serde_json::from_str(&response.text()?).context("Failed to parse response")?;
 	let mut polls = Vec::new();
-	for poll in polls_data["records"]
-		.as_array()
-		.context("Failed to parse list of record")?
-		.iter()
-	{
-		let poll_data: PollData =
-			serde_json::from_value(poll["fields"].clone()).context("Failed to parse poll")?;
+	for poll in polls_data.records.into_iter() {
+		let fields = poll.fields;
 		polls.push(Poll {
-			question: poll_data.question,
-			options: poll_data.options.lines().map(|l| l.to_string()).collect(),
-			author: poll_data.author,
-			done: poll_data.done,
+			question: fields.question,
+			options: fields.options.lines().map(|l| l.to_string()).collect(),
+			author: fields.author,
+			done: fields.done,
 		});
 	}
 
