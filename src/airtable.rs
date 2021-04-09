@@ -13,6 +13,7 @@ struct PollData {
 	question: String,
 	options: String,
 	author: String,
+	#[serde(default = "bool::default")]
 	done: bool,
 }
 #[derive(Debug)]

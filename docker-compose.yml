@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  daily-poll:
+    build:
+      context: .
+      dockerfile: docker/dev.Dockerfile
+    env_file: .env
