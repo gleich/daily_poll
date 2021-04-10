@@ -29,7 +29,8 @@ fn main() {
 						.expect("Failed to create poll with dinopoll");
 					info!("Posted poll");
 					airtable::set_as_used(&client, &poll).expect("Failed to set poll to used");
-					info!("Set poll to used in airtable")
+					info!("Set poll to used in airtable");
+					break;
 				}
 			}
 		}
