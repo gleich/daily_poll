@@ -1,12 +1,12 @@
 use std::env;
 
-use anyhow::{bail, Context};
+use anyhow::Context;
 use reqwest::blocking::Client;
 use reqwest::StatusCode;
 use serde::Deserialize;
 use serde_json::json;
 
-const API_URL: &'static str = "https://api.airtable.com/v0/appycGfYYgt3yM6ie/Table%201";
+const API_URL: &str = "https://api.airtable.com/v0/appycGfYYgt3yM6ie/Table%201";
 
 fn get_token() -> Result<String, anyhow::Error> { Ok(env::var("AIRTABLE_TOKEN")?) }
 
@@ -26,7 +26,7 @@ struct PollData {
 	question: String,
 	options: String,
 	author: String,
-	#[serde(default = "bool::default")]
+	#[serde(default)]
 	used: bool,
 }
 #[derive(Debug)]
@@ -45,16 +45,11 @@ pub fn get_polls(client: &Client) -> Result<Vec<Poll>, anyhow::Error> {
 		.get(API_URL)
 		.bearer_auth(token)
 		.send()
-		.context("Failed to get list of polls")?;
-
-	// Checking status
-	let status = response.status();
-	if status != StatusCode::OK {
-		bail!(
-			"Request to get list of polls failed with status code of {}",
-			status
-		);
-	}
+		.with_context(|| "Failed to get list of polls")?;
+	anyhow::ensure!(
+		response.status() == StatusCode::OK,
+		"Response didn't have status code of 200"
+	);
 
 	// Parsing response
 	let polls_data: AirtableResponse<PollData> =
@@ -76,23 +71,18 @@ pub fn get_polls(client: &Client) -> Result<Vec<Poll>, anyhow::Error> {
 
 pub fn set_as_used(client: &Client, poll: &Poll) -> Result<(), anyhow::Error> {
 	let token = get_token()?;
-	// Making request
+
 	let response = client
 		.patch(API_URL)
 		.json(&json!({"records": [{"id": poll.id, "fields": {"used": true}}]}))
 		.bearer_auth(token)
 		.send()
-		.context("Failed to set poll used status to true")?;
+		.with_context(|| "Failed to set poll used status to true")?;
 
-	// Checking status
-	let status = response.status();
-	if status != StatusCode::OK {
-		bail!(
-			"Request to set poll with ID of {} to used failed with {} status code",
-			poll.id,
-			status
-		);
-	}
+	anyhow::ensure!(
+		response.status() == StatusCode::OK,
+		"Response didn't have status code of 200"
+	);
 
 	Ok(())
 }
