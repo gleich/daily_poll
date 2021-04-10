@@ -5,6 +5,7 @@
 [![lint](https://github.com/Matt-Gleich/daily-poll/actions/workflows/lint.yml/badge.svg)](https://github.com/Matt-Gleich/daily-poll/actions/workflows/lint.yml)
 [![build](https://github.com/Matt-Gleich/daily-poll/actions/workflows/build.yml/badge.svg)](https://github.com/Matt-Gleich/daily-poll/actions/workflows/build.yml)
 [![test](https://github.com/Matt-Gleich/daily-poll/actions/workflows/test.yml/badge.svg)](https://github.com/Matt-Gleich/daily-poll/actions/workflows/test.yml)
+[![deploy](https://github.com/Matt-Gleich/daily-poll/actions/workflows/deploy.yml/badge.svg)](https://github.com/Matt-Gleich/daily-poll/actions/workflows/deploy.yml)
 
 ❓ Daily poll bot for hackclub
 
