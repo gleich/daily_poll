@@ -27,9 +27,12 @@ fn main() {
 				if !poll.used {
 					dinopoll::create_poll(&client, &poll)
 						.expect("Failed to create poll with dinopoll");
-					info!("Posted poll");
+					info!("Posted poll with question of \"{}\"", poll.question);
 					airtable::set_as_used(&client, &poll).expect("Failed to set poll to used");
-					info!("Set poll to used in airtable");
+					info!(
+						"Set poll of question \"{}\" to used in airtable",
+						poll.question
+					);
 					break;
 				}
 			}
