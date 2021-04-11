@@ -28,6 +28,8 @@ struct PollData {
 	author: String,
 	#[serde(default)]
 	used: bool,
+	#[serde(default)]
+	add: bool,
 }
 #[derive(Debug)]
 pub struct Poll {
@@ -35,6 +37,7 @@ pub struct Poll {
 	pub options: Vec<String>,
 	pub author: String,
 	pub used: bool,
+	pub add: bool,
 	pub id: String,
 }
 
@@ -62,6 +65,7 @@ pub fn get_polls(client: &Client) -> Result<Vec<Poll>, anyhow::Error> {
 			options: fields.options.lines().map(|l| l.to_string()).collect(),
 			author: fields.author,
 			used: fields.used,
+			add: fields.add,
 			id: poll.id,
 		});
 	}
