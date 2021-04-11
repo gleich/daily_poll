@@ -6,7 +6,7 @@ use reqwest::StatusCode;
 use serde::Deserialize;
 use serde_json::json;
 
-const API_URL: &str = "https://api.airtable.com/v0/appycGfYYgt3yM6ie/Table%201";
+const API_URL: &str = "https://api.airtable.com/v0/appycGfYYgt3yM6ie/questions";
 
 fn get_token() -> Result<String, anyhow::Error> { Ok(env::var("AIRTABLE_TOKEN")?) }
 
