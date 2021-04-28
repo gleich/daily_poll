@@ -11,7 +11,7 @@ pub fn create_poll(client: &Client, poll: &Poll) -> Result<(), anyhow::Error> {
 	let response = client
 		.post("https://dinopoll.host.calebdenio.me/create")
 		.json(
-			&json!({"title": poll.question, "channel": env::var("DINOPOLL_CHANNEL")?, "options": poll.options, "othersCanAdd": poll.add, "createdBy": poll.author}),
+			&json!({"title": format!("{} (<@{}>)", poll.question, poll.author), "channel": env::var("DINOPOLL_CHANNEL")?, "options": poll.options, "othersCanAdd": poll.add}),
 		)
 		.bearer_auth(env::var("DINOPOLL_TOKEN")?)
 		.send()
