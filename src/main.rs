@@ -10,13 +10,16 @@ mod dinopoll;
 
 fn main() {
 	tracing_subscriber::fmt::init();
+
+	// Creating client
 	let client = Client::new();
 	info!("Created client");
-	let sleep_time = Duration::from_secs(60);
 
+	let sleep_time = Duration::from_secs(60);
 	loop {
 		let now = Utc::now();
 		if now.hour() == 12 && now.minute() == 0 {
+			println!("\n");
 			info!("Cycle engaged");
 
 			let poll_data =
