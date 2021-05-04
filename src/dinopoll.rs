@@ -11,7 +11,7 @@ pub fn create_poll(client: &Client, poll: &Poll) -> Result<(), anyhow::Error> {
 	// Creating title based off author
 	let author_note = if poll.author != "UGTQ393RR" {
 		// If the user is not Matthew Gleich
-		format!(" -- thanks for the submission <@{}>!", &poll.question)
+		format!(" -- thanks for the submission <@{}>!", &poll.author)
 	} else {
 		String::new()
 	};
