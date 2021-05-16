@@ -6,10 +6,11 @@ use reqwest::StatusCode;
 use serde_json::json;
 
 use crate::airtable::Poll;
+use crate::slack;
 
 pub fn create_poll(client: &Client, poll: &Poll) -> Result<(), anyhow::Error> {
 	// Creating title based off author
-	let author_note = if poll.author != "UGTQ393RR" {
+	let author_note = if poll.author != slack::MATT_GLEICH_SLACK_ID {
 		// If the user is not Matthew Gleich
 		format!(" -- thanks for the submission <@{}>!", &poll.author)
 	} else {

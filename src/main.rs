@@ -7,6 +7,7 @@ use tracing::info;
 
 mod airtable;
 mod dinopoll;
+mod slack;
 
 fn main() {
 	tracing_subscriber::fmt::init();
@@ -14,22 +15,21 @@ fn main() {
 	let client = Client::new();
 	info!("Created client");
 
-	let sleep_time = Duration::from_millis(50);
+	let sleep_time = Duration::from_secs(60);
 	loop {
 		let now = Utc::now();
-
 		match (now.hour(), now.minute()) {
+			(0, 0) => send_reminder(&client),
 			(12, 0) => post_poll(&client),
 			_ => (),
 		}
-
 		thread::sleep(sleep_time);
 	}
 }
 
 fn post_poll(client: &Client) {
 	println!("\n");
-	info!("Cycle engaged");
+	info!("Posting poll");
 
 	let poll_data = airtable::get_polls(client).expect("Failed to get polls from airtable");
 	info!("Got polls from airtable");
@@ -46,4 +46,11 @@ fn post_poll(client: &Client) {
 			break;
 		}
 	}
+}
+
+fn send_reminder(client: &Client) {
+	println!("\n");
+	info!("Sending reminder message");
+	slack::send_reminder(client).expect("Failed to send reminder message");
+	info!("Sent reminder message");
 }
