@@ -20,9 +20,10 @@ pub fn create_poll(client: &Client, poll: &Poll) -> Result<()> {
 
 	let response = client
 		.post("https://dinopoll.host.calebdenio.me/create")
-		.json(
-			&json!({"title": title, "channel": env::var("DINOPOLL_CHANNEL")?, "options": poll.options, "othersCanAdd": poll.add}),
-		)
+		.json(&json!({
+			"title": title, "channel": env::var("DINOPOLL_CHANNEL")?, "options":
+			poll.options, "othersCanAdd": poll.add, "multipleVotes": poll.multiselect
+		}))
 		.bearer_auth(env::var("DINOPOLL_TOKEN")?)
 		.send()
 		.context(format!("Failed to create poll with title of {}", title))?;

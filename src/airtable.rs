@@ -32,9 +32,12 @@ struct PollData {
 	used: bool,
 	#[serde(default)]
 	add: bool,
+	#[serde(default)]
+	multiselect: bool,
 }
 #[derive(Debug)]
 pub struct Poll {
+	pub multiselect: bool,
 	pub question: String,
 	pub options: Vec<String>,
 	pub author: String,
@@ -62,6 +65,7 @@ pub fn get_polls(client: &Client) -> Result<Vec<Poll>> {
 	for poll in polls_data.records.into_iter() {
 		let fields = poll.fields;
 		polls.push(Poll {
+			multiselect: fields.multiselect,
 			question: fields.question,
 			options: fields.options.lines().map(|l| l.to_string()).collect(),
 			author: fields.author,
