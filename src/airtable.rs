@@ -1,6 +1,6 @@
 use std::env;
 
-use anyhow::Context;
+use anyhow::{Context, Result};
 use reqwest::blocking::Client;
 use reqwest::StatusCode;
 use serde::Deserialize;
@@ -8,7 +8,9 @@ use serde_json::json;
 
 const API_URL: &str = "https://api.airtable.com/v0/appycGfYYgt3yM6ie/questions";
 
-fn get_token() -> Result<String, anyhow::Error> { Ok(env::var("AIRTABLE_TOKEN")?) }
+fn get_token() -> Result<String> {
+	Ok(env::var("AIRTABLE_TOKEN").context("Failed to get airtable token")?)
+}
 
 #[derive(Deserialize)]
 struct AirtableRecord<T> {
@@ -41,14 +43,13 @@ pub struct Poll {
 	pub id: String,
 }
 
-pub fn get_polls(client: &Client) -> Result<Vec<Poll>, anyhow::Error> {
-	let token = get_token()?;
+pub fn get_polls(client: &Client) -> Result<Vec<Poll>> {
 	// Making request
 	let response = client
 		.get(API_URL)
-		.bearer_auth(token)
+		.bearer_auth(get_token()?)
 		.send()
-		.with_context(|| "Failed to get list of polls")?;
+		.context("Failed to get list of polls")?;
 	anyhow::ensure!(
 		response.status() == StatusCode::OK,
 		"Response didn't have status code of 200"
@@ -73,15 +74,13 @@ pub fn get_polls(client: &Client) -> Result<Vec<Poll>, anyhow::Error> {
 	Ok(polls)
 }
 
-pub fn set_as_used(client: &Client, poll: &Poll) -> Result<(), anyhow::Error> {
-	let token = get_token()?;
-
+pub fn set_as_used(client: &Client, poll: &Poll) -> Result<()> {
 	let response = client
 		.patch(API_URL)
 		.json(&json!({"records": [{"id": poll.id, "fields": {"used": true}}]}))
-		.bearer_auth(token)
+		.bearer_auth(get_token()?)
 		.send()
-		.with_context(|| "Failed to set poll used status to true")?;
+		.context("Failed to set poll used status to true")?;
 
 	anyhow::ensure!(
 		response.status() == StatusCode::OK,

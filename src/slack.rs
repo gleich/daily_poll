@@ -1,6 +1,6 @@
 use std::env;
 
-use anyhow::Context;
+use anyhow::{Context, Result};
 use reqwest::blocking::Client;
 use reqwest::StatusCode;
 use serde_json::json;
@@ -9,13 +9,13 @@ use crate::airtable::{self, Poll};
 
 pub const MATT_GLEICH_SLACK_ID: &str = "UGTQ39RR";
 
-pub fn send_reminder(client: &Client) -> Result<(), anyhow::Error> {
+pub fn send_reminder(client: &Client) -> Result<()> {
 	let response = client
 		.post(env::var("SLACK_WEBHOOK_URL")?)
 		.json(&json!({
 			"text":
 				format!(
-					"Hey everyone! Just a little reminder that if you can DM <@{}> if you have an \
+					"Hey everyone! Just a little reminder that you can DM <@{}> if you have an \
 					 idea for a poll. We currently have {} polls in the queue. Have a good day \
 					 everyone :)",
 					MATT_GLEICH_SLACK_ID,
