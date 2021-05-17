@@ -20,7 +20,7 @@ fn main() {
 		let now = Utc::now();
 		match (now.hour(), now.minute()) {
 			(0, 0) => send_reminder(&client),
-			(3, 19) => post_poll(&client),
+			(12, 0) => post_poll(&client),
 			_ => (),
 		}
 		thread::sleep(sleep_time);
