@@ -7,11 +7,11 @@ use serde_json::json;
 
 use crate::airtable::{self, Poll};
 
-pub const MATT_GLEICH_SLACK_ID: &str = "UGTQ39RR";
+pub const MATT_GLEICH_SLACK_ID: &str = "UGTQ393RR";
 
 pub fn send_reminder(client: &Client) -> Result<()> {
 	let response = client
-		.post(env::var("SLACK_WEBHOOK_URL")?)
+		.post(env::var("SLACK_WEBHOOK_URL").context("Failed to find slack webhook URL env var")?)
 		.json(&json!({
 			"text":
 				format!(
