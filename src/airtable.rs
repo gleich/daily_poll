@@ -67,7 +67,12 @@ pub fn get_polls(client: &Client) -> Result<Vec<Poll>> {
 		polls.push(Poll {
 			multiselect: fields.multiselect,
 			question: fields.question,
-			options: fields.options.lines().map(|l| l.to_string()).collect(),
+			options: fields
+				.options
+				.trim()
+				.lines()
+				.map(|l| l.to_string())
+				.collect(),
 			author: fields.author,
 			used: fields.used,
 			add: fields.add,
