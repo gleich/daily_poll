@@ -34,7 +34,7 @@ pub fn send_reminder(client: &Client) -> Result<()> {
 							}
 						)
 					} else {
-						format!("We currently have {} polls left in the quene.", polls_left)
+						format!("We currently have {} polls left in the queue.", polls_left)
 					}
 				)
 		}))
