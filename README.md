@@ -1,11 +1,11 @@
-<!-- DO NOT REMOVE - contributor_list:data:start:["Matt-Gleich"]:end -->
+<!-- DO NOT REMOVE - contributor_list:data:start:["gleich"]:end -->
 
 # daily-poll
 
-[![lint](https://github.com/Matt-Gleich/daily-poll/actions/workflows/lint.yml/badge.svg)](https://github.com/Matt-Gleich/daily-poll/actions/workflows/lint.yml)
-[![build](https://github.com/Matt-Gleich/daily-poll/actions/workflows/build.yml/badge.svg)](https://github.com/Matt-Gleich/daily-poll/actions/workflows/build.yml)
-[![test](https://github.com/Matt-Gleich/daily-poll/actions/workflows/test.yml/badge.svg)](https://github.com/Matt-Gleich/daily-poll/actions/workflows/test.yml)
-[![deploy](https://github.com/Matt-Gleich/daily-poll/actions/workflows/deploy.yml/badge.svg)](https://github.com/Matt-Gleich/daily-poll/actions/workflows/deploy.yml)
+[![lint](https://github.com/gleich/daily-poll/actions/workflows/lint.yml/badge.svg)](https://github.com/gleich/daily-poll/actions/workflows/lint.yml)
+[![build](https://github.com/gleich/daily-poll/actions/workflows/build.yml/badge.svg)](https://github.com/gleich/daily-poll/actions/workflows/build.yml)
+[![test](https://github.com/gleich/daily-poll/actions/workflows/test.yml/badge.svg)](https://github.com/gleich/daily-poll/actions/workflows/test.yml)
+[![deploy](https://github.com/gleich/daily-poll/actions/workflows/deploy.yml/badge.svg)](https://github.com/gleich/daily-poll/actions/workflows/deploy.yml)
 
 ❓ Daily poll bot for hackclub
 
@@ -18,7 +18,7 @@ We would love to have you contribute! Please read the [contributing guide](CONTR
 ## 👥 Contributors
 
 
-- **[@Matt-Gleich](https://github.com/Matt-Gleich)**
+- **[@gleich](https://github.com/gleich)**
 
 <!-- DO NOT REMOVE - contributor_list:end -->
 <!-- prettier-ignore-end -->
