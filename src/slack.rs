@@ -27,11 +27,7 @@ pub fn send_reminder(client: &Client) -> Result<()> {
 					if polls_left <= 2 {
 						format!(
 							"Gadˈzo͞oks we {}have {} {} left in the queue!!",
-							if polls_left > 0 {
-								"only "
-							} else {
-								""
-							}
+							if polls_left > 0 { "only " } else { "" },
 							polls_left,
 							match polls_left {
 								1 => "poll",
