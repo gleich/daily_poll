@@ -26,7 +26,12 @@ pub fn send_reminder(client: &Client) -> Result<()> {
 					MATT_GLEICH_SLACK_ID,
 					if polls_left <= 2 {
 						format!(
-							"Gadˈzo͞oks we only have {} {} left in the queue!!",
+							"Gadˈzo͞oks we {}have {} {} left in the queue!!",
+							if polls_left > 0 {
+								"only "
+							} else {
+								""
+							}
 							polls_left,
 							match polls_left {
 								1 => "poll",
