@@ -23,7 +23,7 @@ pub fn send_reminder(client: &Client) -> Result<()> {
 				format!(
 					"Hey everyone! Just a little reminder that you can DM <@{}> if you have an \
 					 idea for a poll. {} Have a good day everyone :)",
-					"U01FN5P8FTK",
+					MATT_GLEICH_SLACK_ID,
 					if polls_left <= 2 {
 						format!(
 							"Gadˈzo͞oks we {}have {} {} left in the queue!!",
