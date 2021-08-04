@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 use std::thread;
 use std::time::Duration;
 
@@ -19,8 +20,8 @@ fn main() {
 	loop {
 		let now = Utc::now();
 		match (now.hour(), now.minute()) {
-			(0, 0) => send_reminder(&client),
-			(12, 0) => post_poll(&client),
+			// (0, 0) => send_reminder(&client),
+			// (12, 0) => post_poll(&client),
 			_ => (),
 		}
 		thread::sleep(sleep_time);
