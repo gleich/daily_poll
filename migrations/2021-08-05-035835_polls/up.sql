@@ -1,7 +1,6 @@
 -- Your SQL goes here
 CREATE TABLE polls (
     question VARCHAR(255) NOT NULL,
-    options VARCHAR(255) NOT NULL,
     author VARCHAR(11) NOT NULL,
     used BOOLEAN NOT NULL,
     add_options BOOLEAN NOT NULL,
