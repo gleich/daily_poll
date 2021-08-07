@@ -1,13 +1,17 @@
-#[allow(dead_code)]
 use std::thread;
 use std::time::Duration;
 
 use chrono::{Timelike, Utc};
+use diesel::prelude::*;
 use reqwest::blocking::Client;
 use tracing::info;
 
+#[macro_use]
+extern crate diesel;
+
 mod airtable;
 mod dinopoll;
+mod schema;
 mod slack;
 
 fn main() {
@@ -16,16 +20,16 @@ fn main() {
 	let client = Client::new();
 	info!("Created client");
 
-	let sleep_time = Duration::from_secs(60);
-	loop {
-		let now = Utc::now();
-		match (now.hour(), now.minute()) {
-			// (0, 0) => send_reminder(&client),
-			// (12, 0) => post_poll(&client),
-			_ => (),
-		}
-		thread::sleep(sleep_time);
-	}
+	// let sleep_time = Duration::from_secs(60);
+	// loop {
+	// 	let now = Utc::now();
+	// 	match (now.hour(), now.minute()) {
+	// 		(0, 0) => send_reminder(&client),
+	// 		(12, 0) => post_poll(&client),
+	// 		_ => (),
+	// 	}
+	// 	thread::sleep(sleep_time);
+	// }
 }
 
 fn post_poll(client: &Client) {
