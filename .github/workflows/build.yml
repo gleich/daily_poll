@@ -9,10 +9,7 @@ env:
 
 jobs:
   rust:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2
@@ -26,6 +23,7 @@ jobs:
               - '.github/workflows/**'
       - if: steps.changes.outputs.rust == 'true'
         uses: davidB/rust-cargo-make@v1
+      - run: sudo apt-get install libmysqlclient-dev
       - if: steps.changes.outputs.rust == 'true'
         run: cargo make build-rust
   docker-prod:
