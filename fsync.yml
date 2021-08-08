@@ -1,4 +1,4 @@
-commit_message: "chore(syncing): sync files to latest version"
+commit_message: 'chore(syncing): sync files to latest version'
 replace:
   - before: project_name
     after: daily-poll
@@ -32,18 +32,9 @@ files:
     source: https://github.com/gleich/rust_template/blob/main/.github/ISSUE_TEMPLATE/feature.md
   - path: .github/PULL_REQUEST_TEMPLATE.md
     source: https://github.com/gleich/rust_template/blob/main/.github/PULL_REQUEST_TEMPLATE.md
-  # Dockerfiles
-  - path: docker/dev.Dockerfile
-    source: https://github.com/gleich/rust_template/blob/main/docker/dev.Dockerfile
-  - path: docker/prod.Dockerfile
-    source: https://github.com/gleich/rust_template/blob/main/docker/prod.Dockerfile
   # GitHub Action Workflows
-  - path: .github/workflows/build.yml
-    source: https://github.com/gleich/rust_template/blob/main/.github/workflows/build.yml
   - path: .github/workflows/lint.yml
     source: https://github.com/gleich/rust_template/blob/main/.github/workflows/lint.yml
-  - path: .github/workflows/test.yml
-    source: https://github.com/gleich/rust_template/blob/main/.github/workflows/test.yml
   - path: .github/workflows/contributors.yml
     source: https://github.com/gleich/gleich/blob/master/standard_documents/workflows/contributors.yml
   - path: .github/workflows/fsync.yml
