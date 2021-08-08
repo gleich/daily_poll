@@ -1,20 +1,17 @@
 use std::env;
 
 use anyhow::{Context, Result};
+use diesel::MysqlConnection;
 use reqwest::blocking::Client;
 use reqwest::StatusCode;
 use serde_json::json;
 
-use crate::airtable::{self, Poll};
+use crate::db::unused_polls;
 
 pub const MATT_GLEICH_SLACK_ID: &str = "UGTQ393RR";
 
-pub fn send_reminder(client: &Client) -> Result<()> {
-	let polls_left = airtable::get_polls(client)?
-		.into_iter()
-		.filter(|p| !p.used)
-		.collect::<Vec<Poll>>()
-		.len();
+pub fn send_reminder(client: &Client, database: &MysqlConnection) -> Result<()> {
+	let polls_left = unused_polls(database)?.len();
 
 	let response = client
 		.post(env::var("SLACK_WEBHOOK_URL").context("Failed to find slack webhook URL env var")?)
