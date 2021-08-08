@@ -6,7 +6,7 @@ use diesel::prelude::*;
 use crate::schema;
 
 #[derive(Queryable)]
-pub struct Poll {
+pub struct PollData {
 	pub question: String,
 	pub author: String,
 	pub used: bool,
@@ -16,9 +16,18 @@ pub struct Poll {
 
 #[derive(Queryable)]
 pub struct PollOption {
-	pub id: u32,
+	pub id: i32,
 	pub question: String,
 	pub option_name: String,
+}
+
+pub struct Poll {
+	pub question: String,
+	pub author: String,
+	pub used: bool,
+	pub add_options: bool,
+	pub multiselect: bool,
+	pub options: Vec<String>,
 }
 
 pub fn connect() -> Result<MysqlConnection> {
@@ -26,10 +35,42 @@ pub fn connect() -> Result<MysqlConnection> {
 	Ok(MysqlConnection::establish(&database_url)?)
 }
 
-pub fn get_poll(database: &MysqlConnection) -> Result<Poll> {
-	let results = schema::polls::table
+/// Get a list of unused polls
+/// Returns the raw poll data with no options included.
+pub fn unused_polls(database: &MysqlConnection) -> Result<Vec<PollData>> {
+	let poll_results = schema::polls::table
 		.filter(schema::polls::used.eq(false))
 		.limit(1)
-		.load::<Poll>(database)?;
-	Ok(results.into_iter().nth(0).unwrap())
+		.load::<PollData>(database)?;
+	Ok(poll_results)
+}
+
+/// Get the poll to post for the day with the options
+pub fn poll_to_post(database: &MysqlConnection) -> Result<Poll> {
+	let poll = unused_polls(database)?.into_iter().nth(0).unwrap();
+	let options_results = schema::poll_options::table
+		.filter(schema::poll_options::question.eq(&poll.question))
+		.load::<PollOption>(database)?;
+
+	let mut options: Vec<String> = Vec::new();
+	for option in options_results {
+		options.push(option.option_name)
+	}
+
+	Ok(Poll {
+		question: poll.question,
+		author: poll.author,
+		used: poll.used,
+		add_options: poll.add_options,
+		multiselect: poll.add_options,
+		options,
+	})
+}
+
+/// Set a poll as used
+pub fn set_as_used(database: &MysqlConnection, question: &String) -> Result<()> {
+	diesel::update(schema::polls::table.find(question))
+		.set(schema::polls::used.eq(true))
+		.execute(database)?;
+	Ok(())
 }

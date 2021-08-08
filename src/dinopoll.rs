@@ -5,7 +5,7 @@ use reqwest::blocking::Client;
 use reqwest::StatusCode;
 use serde_json::json;
 
-use crate::airtable::Poll;
+use crate::db::Poll;
 use crate::slack;
 
 pub fn create_poll(client: &Client, poll: &Poll) -> Result<()> {
@@ -22,7 +22,7 @@ pub fn create_poll(client: &Client, poll: &Poll) -> Result<()> {
 		.post("https://dinopoll.host.calebdenio.me/create")
 		.json(&json!({
 			"title": title, "channel": env::var("DINOPOLL_CHANNEL")?, "options":
-			poll.options, "othersCanAdd": poll.add, "multipleVotes": poll.multiselect
+			poll.options, "othersCanAdd": poll.add_options, "multipleVotes": poll.multiselect
 		}))
 		.bearer_auth(env::var("DINOPOLL_TOKEN")?)
 		.send()
