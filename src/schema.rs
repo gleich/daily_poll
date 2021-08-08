@@ -9,7 +9,6 @@ table! {
 table! {
     polls (question) {
         question -> Varchar,
-        options -> Varchar,
         author -> Varchar,
         used -> Bool,
         add_options -> Bool,

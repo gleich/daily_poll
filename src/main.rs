@@ -10,15 +10,21 @@ use tracing::info;
 extern crate diesel;
 
 mod airtable;
+mod db;
 mod dinopoll;
+mod models;
 mod schema;
 mod slack;
 
 fn main() {
 	tracing_subscriber::fmt::init();
 
-	let client = Client::new();
+	// let client = Client::new();
+	let database = db::connect().expect("Failed to connect to MySQL database");
 	info!("Created client");
+
+	let poll = db::get_poll(&database).expect("Failed to get poll from database");
+	println!("{}", &poll.question);
 
 	// let sleep_time = Duration::from_secs(60);
 	// loop {
