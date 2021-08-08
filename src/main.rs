@@ -44,7 +44,7 @@ fn post_poll(client: &Client, database: &MysqlConnection) {
 	info!("Posted poll with question of \"{}\"", poll.question);
 	db::set_as_used(database, &poll.question).expect("Failed to set poll as used");
 	info!(
-		"Set poll of question \"{}\" to used in airtable",
+		"Set poll of question \"{}\" to used in database",
 		poll.question
 	);
 }
