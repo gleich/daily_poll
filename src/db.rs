@@ -5,7 +5,7 @@ use diesel::prelude::*;
 
 use crate::schema;
 
-#[derive(Queryable)]
+#[derive(Queryable, Debug)]
 pub struct PollData {
 	pub question: String,
 	pub author: String,
@@ -14,7 +14,7 @@ pub struct PollData {
 	pub multiselect: bool,
 }
 
-#[derive(Queryable)]
+#[derive(Queryable, Debug)]
 pub struct PollOption {
 	pub id: i32,
 	pub question: String,
@@ -40,7 +40,6 @@ pub fn connect() -> Result<MysqlConnection> {
 pub fn unused_polls(database: &MysqlConnection) -> Result<Vec<PollData>> {
 	let poll_results = schema::polls::table
 		.filter(schema::polls::used.eq(false))
-		.limit(1)
 		.load::<PollData>(database)?;
 	Ok(poll_results)
 }
