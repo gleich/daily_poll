@@ -1,6 +1,6 @@
 <!-- DO NOT REMOVE - contributor_list:data:start:["gleich"]:end -->
 
-# daily-poll
+<img src="./logo.png" height=200 />
 
 [![lint](https://github.com/gleich/daily-poll/actions/workflows/lint.yml/badge.svg)](https://github.com/gleich/daily-poll/actions/workflows/lint.yml)
 [![build](https://github.com/gleich/daily-poll/actions/workflows/build.yml/badge.svg)](https://github.com/gleich/daily-poll/actions/workflows/build.yml)
