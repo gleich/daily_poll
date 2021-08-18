@@ -19,7 +19,7 @@ pub fn send_reminder(client: &Client, database: &MysqlConnection) -> Result<()> 
 			"text":
 				format!(
 					"Hey everyone! Just a little reminder that you can DM <@{}> if you have an \
-					 idea for a poll. {} Have a good day everyone :)",
+					 idea for a poll. {} Have a good rest of your day everyone :)",
 					MATT_GLEICH_SLACK_ID,
 					if polls_left <= 2 {
 						format!(
