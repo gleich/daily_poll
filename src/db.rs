@@ -61,7 +61,7 @@ pub fn poll_to_post(database: &MysqlConnection) -> Result<Poll> {
 		author: poll.author,
 		used: poll.used,
 		add_options: poll.add_options,
-		multiselect: poll.add_options,
+		multiselect: poll.multiselect,
 		options,
 	})
 }
