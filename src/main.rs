@@ -25,8 +25,8 @@ fn main() {
 	loop {
 		let now = Utc::now();
 		match (now.hour(), now.minute()) {
-			(0, 0) => send_reminder(&client, &database),
-			(12, 0) => post_poll(&client, &database),
+			(23, 59) => send_reminder(&client, &database),
+			(11, 59) => post_poll(&client, &database),
 			_ => (),
 		}
 		thread::sleep(sleep_time);
@@ -35,7 +35,8 @@ fn main() {
 
 fn post_poll(client: &Client, database: &MysqlConnection) {
 	println!("\n");
-	info!("Posting poll");
+	info!("Posting poll in one minute");
+	thread::sleep(Duration::from_secs(60));
 
 	let poll = db::poll_to_post(database).expect("Failed to get poll from MySQL");
 	info!("Got poll from MySQL");
@@ -54,7 +55,8 @@ fn post_poll(client: &Client, database: &MysqlConnection) {
 
 fn send_reminder(client: &Client, database: &MysqlConnection) {
 	println!("\n");
-	info!("Sending reminder message");
+	info!("Sending reminder message in one minute");
+	thread::sleep(Duration::from_secs(60));
 	slack::send_reminder(client, database).expect("Failed to send reminder message");
 	info!("Sent reminder message");
 }
