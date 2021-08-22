@@ -3,8 +3,8 @@ use std::env;
 use anyhow::{Context, Result};
 use reqwest::blocking::Client;
 use reqwest::StatusCode;
-use serde_json::json;
 use serde::Deserialize;
+use serde_json::json;
 
 use crate::db::Poll;
 use crate::slack;
@@ -43,13 +43,15 @@ pub fn create_poll(client: &Client, poll: &Poll) -> Result<PollResponse> {
 
 	anyhow::ensure!(
 		response.status() == StatusCode::OK,
-		"Response didn't have status code of 200"
+		"Response didn't have a status code of OK when trying to create the poll with dinopoll"
 	);
 
-	let response_data: Response = serde_json::from_str(&response.text()?).context("Failed to parse dinopoll response")?;
+	let response_data: Response =
+		serde_json::from_str(&response.text()?).context("Failed to parse dinopoll response")?;
 	anyhow::ensure!(
 		response_data.ok,
-		"Error given from daily poll: {}", response_data.message
+		"Error given from daily poll: {}",
+		response_data.message
 	);
 
 	Ok(response_data.poll)

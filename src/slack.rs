@@ -46,3 +46,25 @@ pub fn send_reminder(client: &Client, database: &MysqlConnection) -> Result<()> 
 
 	Ok(())
 }
+
+pub fn pin_msg(client: &Client, timestamp: String) -> Result<()> {
+	let response = client
+		.post("https://slack.com/api/pins.add")
+		.bearer_auth(
+			env::var("SLACK_OAUTH_TOKEN")
+				.context("Failed to get slack oauth token environment variable")?,
+		)
+		.json(&json!({
+			"channel": env::var("DINOPOLL_CHANNEL")?,
+			"timestamp": timestamp
+		}))
+		.send()
+		.context("Request to pin poll failed")?;
+
+	anyhow::ensure!(
+		response.status() == StatusCode::OK,
+		"Response didn't have a status code of OK when trying to pin the poll"
+	);
+
+	Ok(())
+}
