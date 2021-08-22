@@ -40,8 +40,11 @@ fn post_poll(client: &Client, database: &MysqlConnection) {
 	let poll = db::poll_to_post(database).expect("Failed to get poll from MySQL");
 	info!("Got poll from MySQL");
 
-	dinopoll::create_poll(client, &poll).expect("Failed to create poll with dinopoll");
+	let poll_response =
+		dinopoll::create_poll(client, &poll).expect("Failed to create poll with dinopoll");
 	info!("Posted poll with question of \"{}\"", poll.question);
+	slack::pin_msg(&client, poll_response.timestamp).expect("Failed to pin poll");
+	info!("Pinned slack message containing poll");
 	db::set_as_used(database, &poll.question).expect("Failed to set poll as used");
 	info!(
 		"Set poll of question \"{}\" to used in database",
