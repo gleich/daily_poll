@@ -4,11 +4,24 @@ use anyhow::{Context, Result};
 use reqwest::blocking::Client;
 use reqwest::StatusCode;
 use serde_json::json;
+use serde::Deserialize;
 
 use crate::db::Poll;
 use crate::slack;
 
-pub fn create_poll(client: &Client, poll: &Poll) -> Result<()> {
+#[derive(Deserialize)]
+struct Response {
+	pub ok: bool,
+	pub message: String,
+	pub poll: PollResponse,
+}
+
+#[derive(Deserialize)]
+pub struct PollResponse {
+	pub timestamp: String,
+}
+
+pub fn create_poll(client: &Client, poll: &Poll) -> Result<PollResponse> {
 	// Creating title based off author
 	let author_note = if poll.author != slack::MATT_GLEICH_SLACK_ID {
 		// If the user is not Matthew Gleich
@@ -33,5 +46,11 @@ pub fn create_poll(client: &Client, poll: &Poll) -> Result<()> {
 		"Response didn't have status code of 200"
 	);
 
-	Ok(())
+	let response_data: Response = serde_json::from_str(&response.text()?).context("Failed to parse dinopoll response")?;
+	anyhow::ensure!(
+		response_data.ok,
+		"Error given from daily poll: {}", response_data.message
+	);
+
+	Ok(response_data.poll)
 }
