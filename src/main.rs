@@ -44,13 +44,13 @@ fn post_poll(client: &Client, database: &MysqlConnection) {
 	let poll_response =
 		dinopoll::create_poll(client, &poll).expect("Failed to create poll with dinopoll");
 	info!("Posted poll with question of \"{}\"", poll.question);
-	slack::pin_msg(&client, poll_response.timestamp).expect("Failed to pin poll");
-	info!("Pinned slack message containing poll");
 	db::set_as_used(database, &poll.question).expect("Failed to set poll as used");
 	info!(
 		"Set poll of question \"{}\" to used in database",
 		poll.question
 	);
+	slack::pin_msg(&client, poll_response.timestamp).expect("Failed to pin poll");
+	info!("Pinned slack message containing poll");
 }
 
 fn send_reminder(client: &Client, database: &MysqlConnection) {
