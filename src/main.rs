@@ -19,7 +19,7 @@ fn main() {
 
 	let client = Client::new();
 	let database = db::connect().expect("Failed to connect to MySQL database");
-	info!("Created client and connected to database");
+	info!("Connected to database");
 
 	let sleep_time = Duration::from_secs(60);
 	loop {
