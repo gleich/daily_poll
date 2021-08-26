@@ -34,4 +34,4 @@ daily-poll uses a GitHub action called [gh_fsync](https://github.com/Matt-Gleich
 
 ---
 
-Thats all, good luck with your contribution, and please make an issue if anything doesn't make sense.
+That's all, good luck with your contribution, and please make an issue if anything doesn't make sense.
