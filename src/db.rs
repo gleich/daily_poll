@@ -46,7 +46,10 @@ pub fn unused_polls(database: &MysqlConnection) -> Result<Vec<PollData>> {
 
 /// Get the poll to post for the day with the options
 pub fn poll_to_post(database: &MysqlConnection) -> Result<Poll> {
-	let poll = unused_polls(database)?.into_iter().nth(0).unwrap();
+	let poll = unused_polls(database)?
+		.into_iter()
+		.nth(0)
+		.expect("Failed to get first element of unused polls");
 	let options_results = schema::poll_options::table
 		.filter(schema::poll_options::question.eq(&poll.question))
 		.load::<PollOption>(database)?;
