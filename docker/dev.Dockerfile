@@ -38,7 +38,7 @@ RUN apt-get update -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install the planetscale cli
-ENV PSCALE_CLI_VERSION 0.68.0
+ENV PSCALE_CLI_VERSION 0.79.0
 ENV PSCALE_DEB_FILE pscale_${PSCALE_CLI_VERSION}_linux_amd64.deb
 # hadolint ignore=DL3008
 RUN wget -q https://github.com/planetscale/cli/releases/download/v${PSCALE_CLI_VERSION}/${PSCALE_DEB_FILE} && \
@@ -48,4 +48,4 @@ RUN wget -q https://github.com/planetscale/cli/releases/download/v${PSCALE_CLI_V
 ENV RUST_LOG info
 ENV RUST_BACKTRACE 1
 
-CMD ["pscale", "connect", "daily", "main", "--execute-protocol", "mysql", "--execute",  "./daily-poll"]
+CMD ["pscale", "connect", "daily", "main", "--org", "gleich", "--execute-protocol", "mysql", "--execute",  "./daily-poll"]

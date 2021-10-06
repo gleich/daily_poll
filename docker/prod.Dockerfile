@@ -48,4 +48,4 @@ RUN wget -q https://github.com/planetscale/cli/releases/download/v${PSCALE_CLI_V
 ENV RUST_LOG info
 ENV RUST_BACKTRACE 1
 
-CMD ["pscale", "connect", "daily", "main", "--execute-protocol", "mysql", "--execute",  "./daily-poll"]
+CMD ["pscale", "connect", "daily", "main", "--org", "gleich", "--execute-protocol", "mysql", "--execute",  "./daily-poll"]
