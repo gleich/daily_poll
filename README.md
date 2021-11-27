@@ -2,10 +2,10 @@
 
 <img src="./logo.png" height=200 />
 
-[![lint](https://github.com/gleich/daily-poll/actions/workflows/lint.yml/badge.svg)](https://github.com/gleich/daily-poll/actions/workflows/lint.yml)
-[![build](https://github.com/gleich/daily-poll/actions/workflows/build.yml/badge.svg)](https://github.com/gleich/daily-poll/actions/workflows/build.yml)
-[![test](https://github.com/gleich/daily-poll/actions/workflows/test.yml/badge.svg)](https://github.com/gleich/daily-poll/actions/workflows/test.yml)
-[![deploy](https://github.com/gleich/daily-poll/actions/workflows/deploy.yml/badge.svg)](https://github.com/gleich/daily-poll/actions/workflows/deploy.yml)
+[![lint](https://github.com/gleich/daily_poll/actions/workflows/lint.yml/badge.svg)](https://github.com/gleich/daily_poll/actions/workflows/lint.yml)
+[![build](https://github.com/gleich/daily_poll/actions/workflows/build.yml/badge.svg)](https://github.com/gleich/daily_poll/actions/workflows/build.yml)
+[![test](https://github.com/gleich/daily_poll/actions/workflows/test.yml/badge.svg)](https://github.com/gleich/daily_poll/actions/workflows/test.yml)
+[![deploy](https://github.com/gleich/daily_poll/actions/workflows/deploy.yml/badge.svg)](https://github.com/gleich/daily_poll/actions/workflows/deploy.yml)
 
 ❓ Daily poll bot for hackclub
 

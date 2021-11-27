@@ -20,5 +20,5 @@ This PR resolves #22
 -->
 
 <!--
-Thank you for your contribution to daily-poll!
+Thank you for your contribution to daily_poll!
 -->

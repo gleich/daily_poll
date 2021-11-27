@@ -26,7 +26,7 @@ jobs:
       - if: steps.changes.outputs.source == 'true'
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u gleich --password-stdin
-          docker build -f docker/prod.Dockerfile -t ghcr.io/gleich/daily-poll .
-          docker push ghcr.io/gleich/daily-poll
+          docker build -f docker/prod.Dockerfile -t ghcr.io/gleich/daily_poll .
+          docker push ghcr.io/gleich/daily_poll
       - if: steps.changes.outputs.source == 'true'
-        run: docker run caprover/cli-caprover:v2.1.1 caprover deploy --caproverUrl https://api.mattglei.ch --caproverPassword ${{ secrets.CAPROVER_PASSWORD }} --caproverApp daily --imageName ghcr.io/gleich/daily-poll
+        run: docker run caprover/cli-caprover:v2.1.1 caprover deploy --caproverUrl https://api.mattglei.ch --caproverPassword ${{ secrets.CAPROVER_PASSWORD }} --caproverApp daily --imageName ghcr.io/gleich/daily_poll

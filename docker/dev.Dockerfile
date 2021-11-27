@@ -28,7 +28,7 @@ RUN cargo make build-rust-dev
 # hadolint ignore=DL3006,DL3007
 FROM debian:stable-slim
 WORKDIR /
-COPY --from=builder /usr/src/app/target/debug/daily-poll .
+COPY --from=builder /usr/src/app/target/debug/daily_poll .
 
 # Install needed deps
 # hadolint ignore=DL3008
@@ -48,4 +48,4 @@ RUN wget -q https://github.com/planetscale/cli/releases/download/v${PSCALE_CLI_V
 ENV RUST_LOG info
 ENV RUST_BACKTRACE 1
 
-CMD ["pscale", "connect", "daily", "main", "--org", "gleich", "--execute-protocol", "mysql", "--execute",  "./daily-poll"]
+CMD ["pscale", "connect", "daily", "main", "--org", "gleich", "--execute-protocol", "mysql", "--execute",  "./daily_poll"]
